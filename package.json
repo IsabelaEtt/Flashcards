@@ -1,0 +1,23 @@
+{
+  "name": "flashcards",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node Back/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsabelaEtt/Flashcards.git"
+  },
+  "author": "Isabela Ett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IsabelaEtt/Flashcards/issues"
+  },
+  "homepage": "https://github.com/IsabelaEtt/Flashcards#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
