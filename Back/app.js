@@ -26,7 +26,47 @@ app.post("/login", async (req, res) => {
 
 	let user;
 	try { user = await userController.getUserByLogin(loginObj.username, loginObj.password);
-	} catch(e) { return getResponse(req, res, 404, e); }
+	} catch(e) { return getResponse(req, res, 404, e.message); }
 
 	return getResponse(req, res, 200, user);
+});
+
+app.post("/user/create", async (req, res) => {
+	const newUserObj = req.body || {};
+
+	let user;
+	try { user = await userController.createNewUser(newUserObj);
+	} catch(e) { return getResponse(req, res, 405, e.message); }
+
+	return getResponse(req, res, 200, user);
+});
+
+app.post("/flashcard/create", async (req, res) => {
+	const newFlashCardObj = req.body || {};
+
+	let flashcard;
+	try { flashcard = await flashcardController.createNewFlashCard(newFlashCardObj);
+	} catch(e) { return getResponse(req, res, 405, e.message); }
+
+	return getResponse(req, res, 200, flashcard);
+});
+
+app.post("/tag/create", async (req, res) => {
+	const newTagObj = req.body || {};
+
+	let tag;
+	try { tag = await flashcardController.createNewTag(newTagObj);
+	} catch(e) { return getResponse(req, res, 405, e.message); }
+
+	return getResponse(req, res, 200, tag);
+});
+
+app.get("/study", async (req, res) => {
+	const studyQuery = req.query || {};
+
+	let flashCard;
+	try { flashCard = await flashcardController.getFlashCardToStudy(studyQuery);
+	} catch(e) { return getResponse(req, res, 404, e.message); }
+
+	return getResponse(req, res, 200, flashCard);
 });

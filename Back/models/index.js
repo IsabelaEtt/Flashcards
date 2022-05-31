@@ -35,11 +35,13 @@ let User = global.mongooseConnection.model('User', require('./User'));
 let Friendship = global.mongooseConnection.model('Friendship', require('./Friendship'));
 let FlashCard = global.mongooseConnection.model('FlashCard', require('./FlashCard'));
 let UserFlashCard = global.mongooseConnection.model('UserFlashCard', require('./UserFlashCard'));
+let Tag = global.mongooseConnection.model('Tag', require('./Tag'));
 
 module.exports = {
     User,
     Friendship,
     FlashCard,
     UserFlashCard,
-    ObjectId
+    ObjectId,
+    Tag
 };

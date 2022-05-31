@@ -14,10 +14,15 @@ let UserFlashCardSchema = new mongoose.Schema({
     },
     timesAnsweredRigh: {
         type: Number,
+        default: 0
     },
     deleted: {
         type: Boolean,
         default: false
+    },
+    tag: {
+        type: ObjectId,
+        ref: "Tag"
     }
 },{ timestamps: true });
 
@@ -34,7 +39,7 @@ UserFlashCardSchema.pre("validate", async function(cb) {
 
         let flashCardUserRelation;
         try { flashCardUserRelation = await UserFlashCard.findOne(query).select("_id");
-        } catch(e) { console.log("error finding user in validator", e); }
+        } catch(e) { console.log("error finding relation in validator", e); }
 
         if (flashCardUserRelation) {
             cb(new Error(`O usuário ${this.user} já possui o flashcard ${this.flashCard}!`)); 
