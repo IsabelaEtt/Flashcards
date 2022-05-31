@@ -51,6 +51,26 @@ app.post("/flashcard/create", async (req, res) => {
 	return getResponse(req, res, 200, flashcard);
 });
 
+app.delete("/flashcard/delete", async (req, res) => {
+	const flashCardToDelete = req.query.flashcard;
+	const requester = req.query.requester;
+
+	try { await flashcardController.deleteFlashCard(flashCardToDelete, requester);
+	} catch(e) { return getResponse(req, res, 405, e.message); }
+
+	return getResponse(req, res, 200, "FlashCard excluído com sucesso");
+});
+
+app.put("/flashcard/edit", async (req, res) => {
+	const flashCardObj = req.body || {};
+
+	let flashCard;
+	try { flashCard = await flashcardController.editFlashCard(flashCardObj);
+	} catch(e) { return getResponse(req, res, 405, e.message); }
+
+	return getResponse(req, res, 200, flashCard);
+});
+
 app.post("/tag/create", async (req, res) => {
 	const newTagObj = req.body || {};
 
