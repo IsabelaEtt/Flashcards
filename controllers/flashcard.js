@@ -248,11 +248,11 @@ module.exports = {
 
         if (!requester) { throw new Error("Usuário não encontrado"); }
 
-        skip = Number(skip);
-        skip = isNaN(skip) || skip < 0 ? 0 : skip;
+        // skip = Number(skip);
+        // skip = isNaN(skip) || skip < 0 ? 0 : skip;
 
-        limit = Number(limit);
-        limit = isNaN(limit) || limit < 0 ? 10 : limit;
+        // limit = Number(limit);
+        // limit = isNaN(limit) || limit < 0 ? 10 : limit;
 
         let flashCardsQuery = {
             user: requester._id,
@@ -264,8 +264,8 @@ module.exports = {
             flashCards = await UserFlashCard.find(flashCardsQuery)
                 .populate({ path: "flashCard", model: "FlashCard" })
                 .populate({ path: "tag", model: "Tag" })
-                .skip(skip)
-                .limit(limit)
+                // .skip(skip)
+                // .limit(limit)
                 .lean()
         } catch(e) { throw new Error(e.message); }
 
