@@ -12,7 +12,7 @@ let UserFlashCardSchema = new mongoose.Schema({
         ref: "FlashCard",
         required: true
     },
-    timesAnsweredRigh: {
+    timesAnsweredRight: {
         type: Number,
         default: 0
     },

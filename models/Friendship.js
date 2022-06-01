@@ -20,6 +20,10 @@ let FriendshipSchema = new mongoose.Schema({
 
 FriendshipSchema.pre("validate", async function(cb) {
     if (this.user != undefined && this.friend != undefined) {
+        if (this.user == this.friend) {
+            cb(new Error(`Um usuário não pode ser amigo dele mesmo!`)); 
+        }
+
         const Friendship = global.mongooseConnection.model("Friendship");
 
         const friendshipQuery = {

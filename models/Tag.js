@@ -23,7 +23,7 @@ TagSchema.pre("validate", async function(cb) {
         
         let query = {
             owner: this.owner,
-            tag: this.tag,
+            name: this.name,
             deleted: false,
             _id: { $ne: this._id }
         }
