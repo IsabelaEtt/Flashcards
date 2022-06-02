@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 
 const userController = require("./controllers/user");
 const flashcardController = require("./controllers/flashcard");
@@ -16,6 +17,8 @@ function getResponse (req, res, code, message) {
 let app = express();
 
 app.use(bodyParser.json());
+
+app.use(cors());
 
 app.listen(3001, () => {
 	console.log(`server is up on port 3001`);

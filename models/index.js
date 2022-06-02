@@ -1,4 +1,4 @@
-let dbSrv = "mongodb+srv://isaett:isa1234@cluster0.hlyzomw.mongodb.net/?retryWrites=true&w=majority";
+let dbSrv = "mongodb://localhost:27017/flashcards";
 
 const mongoose = require("mongoose");
 const uriFormat = require('mongodb-uri');
