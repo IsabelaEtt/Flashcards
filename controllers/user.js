@@ -113,5 +113,43 @@ module.exports = {
             totalFriends,
             friends
         }
+    },
+
+    getUserPossibleNewFriends: async(requesterId) => {
+        if (!requesterId) { throw new Error("Insira o usuário"); }
+
+        let requester;
+        try { requester = await User.findOne({ _id: requesterId, deleted: false });
+        } catch(e) { throw new Error(e.message); }
+
+        if (!requester) { throw new Error("Usuário não encontrado"); }
+
+        let friendshipQuery = {
+            $or: [
+                {
+                    user: requester._id
+                },
+                {
+                    friend: requester._id
+                }
+            ], 
+            deleted: false
+        }
+
+        let friends;
+        try { 
+            friends = await Friendship.find(friendshipQuery).select("user friend").lean()
+        } catch(e) { throw new Error(e.message); }
+
+        friends = friends.map(obj => {
+            let friendId = String(obj.user) == String(requester._id) ? obj.friend : obj.user;
+            return friendId;
+        })
+
+        let possibleNewFriends;
+        try { possibleNewFriends = await User.find({ _id: { $nin: friends.concat([requester._id])} }).select("_id name username").lean();
+        } catch(e) { throw new Error(e.message); }
+
+        return possibleNewFriends;
     }
 }

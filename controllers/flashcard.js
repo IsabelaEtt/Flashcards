@@ -94,6 +94,8 @@ module.exports = {
 
         if (!flashCard) { throw new Error("FlashCard não encontrado!"); }
 
+        flashCard = { ...flashCard.flashCard, timesAnsweredRight: flashCard.timesAnsweredRight}
+
         let count;
         try { count = await UserFlashCard.countDocuments({ studyQuery });
         } catch(e) { throw new Error(e.message); }
@@ -262,12 +264,22 @@ module.exports = {
         let flashCards;
         try { 
             flashCards = await UserFlashCard.find(flashCardsQuery)
-                .populate({ path: "flashCard", model: "FlashCard" })
+                .populate({ 
+                    path: "flashCard",
+                    populate: [{
+                        path: "owner",
+                        select: "_id name username",
+                        model: "User"
+                    }],
+                    model: "FlashCard" 
+                })
                 .populate({ path: "tag", model: "Tag" })
                 // .skip(skip)
                 // .limit(limit)
                 .lean()
         } catch(e) { throw new Error(e.message); }
+
+        flashCards = flashCards.map(card => card.flashCard)
 
         let totalFlashCards;
         try { totalFlashCards = await UserFlashCard.countDocuments(flashCardsQuery);

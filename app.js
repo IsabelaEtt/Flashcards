@@ -174,3 +174,13 @@ app.get("/friend/list", async (req, res) => {
 
 	return getResponse(req, res, 200, response);
 });
+
+app.get("/friend/possibilities", async (req, res) => {
+	const requester = req.query.requester;
+
+	let response;
+	try { response = await userController.getUserPossibleNewFriends(requester);
+	} catch(e) { return getResponse(req, res, 404, e.message); }
+
+	return getResponse(req, res, 200, response);
+});
