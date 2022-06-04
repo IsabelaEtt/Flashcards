@@ -272,13 +272,17 @@ module.exports = {
                     }],
                     model: "FlashCard" 
                 })
-                .populate({ path: "tag", model: "Tag" })
+                .populate({ path: "tag", select: "name", model: "Tag" })
                 // .skip(skip)
                 // .limit(limit)
                 .lean()
         } catch(e) { throw new Error(e.message); }
 
-        flashCards = flashCards.map(card => card.flashCard)
+        flashCards = flashCards.map(card => ({
+            ...card.flashCard,
+            tag: card.tag,
+            userFlashCard: card._id
+        }));
 
         let totalFlashCards;
         try { totalFlashCards = await UserFlashCard.countDocuments(flashCardsQuery);
