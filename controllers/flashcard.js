@@ -69,20 +69,19 @@ module.exports = {
         if (!owner) { throw new Error("Dono não encontrado!"); }
 
         let query = {
-            owner,
+            user: owner._id,
             deleted: false
         }
 
-        if (studyQuery.tags) {
-            let tags;
-            try { tags = await Tag.find({ _id: { $in: studyQuery.tags }, deleted: false}).select("_id").lean();
+        if (studyQuery.tag) {
+            let tag;
+            try { tag = await Tag.findOne({ _id: studyQuery.tag, deleted: false }).select("_id").lean();
             } catch(e) { throw new Error(e.message); }
 
-            if (tags.length != studyQuery.tags.length) { throw new Error("Nâo foi possível encontrar todas as tags!"); }
+            if (!tag) { throw new Error("Nâo foi possível encontrar a tag!"); }
 
-            query.tags = tags.map(tag => tag._id);
+            query.tag = tag._id;
         }
-
 
         let flashCard;
         try { 
