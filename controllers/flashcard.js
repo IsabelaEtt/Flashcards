@@ -93,7 +93,7 @@ module.exports = {
 
         if (!flashCard) { throw new Error("FlashCard não encontrado!"); }
 
-        flashCard = { ...flashCard.flashCard, timesAnsweredRight: flashCard.timesAnsweredRight}
+        flashCard = { ...flashCard.flashCard, timesAnsweredRight: flashCard.timesAnsweredRight, userFlashCard: flashCard._id }
 
         let count;
         try { count = await UserFlashCard.countDocuments({ studyQuery });
